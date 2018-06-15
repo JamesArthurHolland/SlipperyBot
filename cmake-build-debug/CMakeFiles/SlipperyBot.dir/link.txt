@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -g   CMakeFiles/SlipperyBot.dir/main.cpp.o CMakeFiles/SlipperyBot.dir/Board.cpp.o CMakeFiles/SlipperyBot.dir/Card.cpp.o CMakeFiles/SlipperyBot.dir/Deck.cpp.o CMakeFiles/SlipperyBot.dir/Trick.cpp.o CMakeFiles/SlipperyBot.dir/Node.cpp.o CMakeFiles/SlipperyBot.dir/ISMCTS.cpp.o  -o SlipperyBot 
