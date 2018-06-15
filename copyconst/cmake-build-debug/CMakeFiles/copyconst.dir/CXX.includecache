@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jamie/ClionProjects/copyconst/Board.cpp
+map
+-
+iostream
+-
+Board.h
+/home/jamie/ClionProjects/copyconst/Board.h
+
+/home/jamie/ClionProjects/copyconst/Board.h
+vector
+-
+Node.h
+/home/jamie/ClionProjects/copyconst/Node.h
+
+/home/jamie/ClionProjects/copyconst/Node.cpp
+Node.h
+/home/jamie/ClionProjects/copyconst/Node.h
+
+/home/jamie/ClionProjects/copyconst/Node.h
+string
+-
+
+/home/jamie/ClionProjects/copyconst/main.cpp
+iostream
+-
+map
+-
+Node.h
+/home/jamie/ClionProjects/copyconst/Node.h
+Board.h
+/home/jamie/ClionProjects/copyconst/Board.h
+

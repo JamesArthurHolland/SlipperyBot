@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/copyconst.dir/main.cpp.o CMakeFiles/copyconst.dir/Node.cpp.o CMakeFiles/copyconst.dir/Board.cpp.o  -o copyconst 
