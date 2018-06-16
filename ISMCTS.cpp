@@ -2,6 +2,7 @@
 // Created by jamie on 12/06/18.
 //
 
+#include <iostream>
 #include "ISMCTS.h"
 #include "Node.h"
 #include "Board.h"
@@ -15,20 +16,23 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
         Node* node;
         node = root;
 
-        Board state = root_state.clone_and_randomize(root_state.get_player_to_move());
+        Board state = root_state; // deep clone using copy constructor
+        state.randomize(root_state.get_player_to_move()); // create a determination
 
         // Select
 
         while(state.get_moves().size() != 0 && node->get_untried_moves(state.get_moves()).size() != 0) {
-            node = node->UCB_select_child(state.get_moves());
-            if(node != NULL) {
-                player_move* move = node->get_move();
+            Node* selected_node = node->UCB_select_child(state.get_moves());
+            if(selected_node != NULL) {
+                player_move* move = selected_node->get_move();
                 state.do_move(*move);
+                node = selected_node;
             }
         }
 
         // Expand
-        std::vector<Card> untried_moves = node->get_untried_moves(state.get_moves());
+        std::vector<Card> all_moves = state.get_moves();
+        std::vector<Card> untried_moves = node->get_untried_moves(all_moves);
         if(untried_moves.size() != 0) { // non-terminal, we can expand.
             int randomIndex = rand() % untried_moves.size();
             Card card = untried_moves.at(randomIndex);
@@ -40,6 +44,7 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
         // Simulate
         while(state.get_moves().size() != 0) {
             int randomIndex = rand() % state.get_moves().size();
+            std::cout << "-------" << std::endl;
             Card card = state.get_moves().at(randomIndex);
             player_move p_move = std::make_tuple(state.get_player_to_move(), card);
             state.do_move(p_move);

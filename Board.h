@@ -19,39 +19,26 @@ public:
     static const int MAX_NUMBER_OF_TRICKS = 7; // 52cards / 4players = 7 whole tricks
 
     Board();
-    Board(
-      int player_to_move,
-      std::vector<Card> discard_pile,
-      std::map<int, Hand> player_hands,
-      std::map<int, int> player_scores,
-      int current_trump_suit
-    ) : m_player_to_move(player_to_move),
-        m_discard_pile(discard_pile),
-        m_player_hands(player_hands),
-        m_player_scores(player_scores),
-        m_current_trump_suit(current_trump_suit),
-        m_current_trick(NULL)
-    {}
-
+    Board( const Board &obj);
     ~Board() { delete m_current_trick; }
 
-    Board clone_and_randomize(int player_number);
     std::vector<Card> get_moves();
     int get_next_player(int player_number);
     int get_player_to_move();
-    void do_move(player_move move);
-
     int get_result(int player_number);
+
+    void do_move(player_move move);
+    void randomize(int player_number);
+
 
     player_move getRandomLegalCard(int player_number);
 private:
     int m_player_to_move = 1;
+    std::map<int, Hand*> m_player_hands;
     std::vector<Card> m_discard_pile;
 
-    std::map<int, Hand*> m_player_hands;
     std::map<int, int>  m_player_scores;
 
-    void randomize(int player_number);
     void remove_card_from_hand(Hand* hand, Card card);
 
     Trick *m_current_trick;

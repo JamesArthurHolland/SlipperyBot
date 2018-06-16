@@ -8,10 +8,6 @@
 
 std::vector<Card> Node::get_untried_moves(std::vector<Card> legalMoves)
 {
-    if(m_children.size() == 0) {
-        std::vector<Card> untried_moves;
-        return untried_moves;
-    }
     for(std::vector<Card>::iterator legalMoveIterator = legalMoves.begin(); legalMoveIterator != legalMoves.end();
         ++legalMoveIterator)
     {
@@ -58,8 +54,8 @@ Node* Node::UCB_select_child(std::vector<Card> legalMoves)
         }
     }
 
-    Node* max_score_node;
-    int max_score = 0;
+    Node* max_score_node = new Node();
+    int max_score = -1;
     for (std::vector<Node*>::iterator childIterator = legal_children.begin();
         childIterator != legal_children.end(); ++childIterator) {
         int current_score = (*childIterator)->get_UCB_score();
@@ -69,6 +65,9 @@ Node* Node::UCB_select_child(std::vector<Card> legalMoves)
         }
 
         (*childIterator)->m_avails++;
+    }
+    if(max_score == -1) {
+        return NULL;
     }
     return max_score_node;
 }

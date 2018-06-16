@@ -6,24 +6,59 @@
 #include <chrono>
 #include "Board.h"
 #include "Deck.h"
+#include "Node.h"
 
 
 Board::Board() : m_current_trick(NULL)
 {
     Deck deck;
     deck.shuffle_Deck();
-    for (unsigned int i(0); i < 13; ++i)
+
+    Hand* hand1 = new Hand();
+    Card card = deck.getOneCard();
+    hand1->push_back(card);
+    m_player_hands.insert(std::pair<int, Hand*>(1, hand1));
+
+    Hand* hand2 = new Hand();
+    hand2->push_back(deck.getOneCard());
+    m_player_hands.insert(std::pair<int, Hand*>(2, hand2));
+
+    Hand* hand3 = new Hand();
+    hand3->push_back(deck.getOneCard());
+    m_player_hands.insert(std::pair<int, Hand*>(3, hand3));
+
+    Hand* hand4 = new Hand();
+    hand4->push_back(deck.getOneCard());
+    m_player_hands.insert(std::pair<int, Hand*>(4, hand4));
+
+    for (unsigned int i(0); i < 12; ++i)
     {
-        m_player_hands[1].push_back(deck.getOneCard());
-        m_player_hands[2].push_back(deck.getOneCard());
-        m_player_hands[3].push_back(deck.getOneCard());
-        m_player_hands[4].push_back(deck.getOneCard());
+        m_player_hands[1]->push_back(deck.getOneCard());
+        m_player_hands[2]->push_back(deck.getOneCard());
+        m_player_hands[3]->push_back(deck.getOneCard());
+        m_player_hands[4]->push_back(deck.getOneCard());
+    }
+    std::cout << "Board constructor." << std::endl;
+}
+
+Board::Board(const Board &obj)
+{
+    m_player_to_move = obj.m_player_to_move;
+    m_discard_pile = obj.m_discard_pile;
+    m_player_hands = obj.m_player_hands;
+    m_player_scores = obj.m_player_scores;
+    m_current_trump_suit = obj.m_current_trump_suit;
+    m_current_trick = NULL;
+    for(auto const &pair : obj.m_player_hands) {
+        Hand* newHandPointer = new Hand();
+        *newHandPointer = *pair.second;
+        m_player_hands.insert(std::pair<int, Hand*>(pair.first, newHandPointer));
     }
 }
 
 player_move Board::getRandomLegalCard(int player_number)
 {
-    Hand *players_Hand = &m_player_hands[player_number];
+    Hand* players_Hand = m_player_hands[player_number];
 
     // First loop for asked suit
     for(std::vector<Card>::iterator it = players_Hand->begin(); it != players_Hand->end(); ++it) {
@@ -76,15 +111,15 @@ int Board::get_player_to_move()
 
 std::vector<Card> Board::get_moves()
 {
-    Hand hand = m_player_hands.find(m_player_to_move)->second;
+    Hand* hand = m_player_hands[m_player_to_move];
 
     if(m_current_trick == NULL) {
-        return hand;
+        return *hand;
     }
     else{
         Hand legalMovesFromHand;
         bool has_cards_of_asked_suit = false;
-        for(Hand::iterator it = hand.begin(); it != hand.end(); ++it) {
+        for(Hand::iterator it = hand->begin(); it != hand->end(); ++it) {
             if(it->get_suit() == m_current_trick->getSuitAsked()) {
                 has_cards_of_asked_suit = true;
                 Card card(it->get_suit(), it->get_rank());
@@ -94,7 +129,7 @@ std::vector<Card> Board::get_moves()
         if(has_cards_of_asked_suit) {
             return legalMovesFromHand;
         }
-        return hand;
+        return *hand;
     }
 }
 
@@ -116,29 +151,13 @@ void Board::do_move(player_move move)
     int score;
     std::tie(trick_result_code, player_number, score) = result;
 
-    if(trick_result_code != Trick::TRICK_RESULT_CODE_STILL_IN_PLAY) {
+    if(trick_result_code == Trick::TRICK_RESULT_CODE_FINISHED) {
         Hand* hand = m_player_hands.find(player_number)->second;
         remove_card_from_hand(hand, card);
         m_player_scores[player_number] = m_player_scores[player_number] + score;
         m_player_to_move = std::get<1>(result);
+        m_current_trick = NULL;
     }
-}
-
-Board Board::clone_and_randomize(int player_number)
-{
-    if(m_current_trick != NULL) {
-        exit(0);
-    }
-    Board board(
-        m_player_to_move,
-        m_discard_pile,
-        m_player_hands,
-        m_player_scores,
-        m_current_trump_suit
-    );
-    board.randomize(player_number);
-
-    return board;
 }
 
 void Board::randomize(int player_number)
@@ -147,7 +166,7 @@ void Board::randomize(int player_number)
     for (unsigned int i(1); i < 5; ++i)
     {
         if(i != player_number) {
-            Hand hand = m_player_hands.find(i)->second;
+            Hand hand = *m_player_hands[i];
             m_player_hands.erase(i);
             deck.insert(deck.end(), hand.begin(), hand.end());
         }
@@ -162,7 +181,15 @@ void Board::randomize(int player_number)
             if(i != player_number) {
                 Card card(deck.back().get_suit(), deck.back().get_rank());
                 deck.pop_back();
-                m_player_hands[i].push_back(card);
+
+                if (m_player_hands.count(i) == 1) { // if value exists for key
+                    m_player_hands[i]->push_back(card);
+                }
+                else{
+                    Hand* newHand = new Hand();
+                    newHand->push_back(card);
+                    m_player_hands.insert(std::pair<int, Hand*>(i, newHand));
+                }
             }
         }
     }

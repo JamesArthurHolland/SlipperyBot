@@ -5,6 +5,7 @@ CMakeFiles/SlipperyBot.dir/Board.cpp.o: ../Board.cpp
 CMakeFiles/SlipperyBot.dir/Board.cpp.o: ../Board.h
 CMakeFiles/SlipperyBot.dir/Board.cpp.o: ../Card.h
 CMakeFiles/SlipperyBot.dir/Board.cpp.o: ../Deck.h
+CMakeFiles/SlipperyBot.dir/Board.cpp.o: ../Node.h
 CMakeFiles/SlipperyBot.dir/Board.cpp.o: ../Trick.h
 
 CMakeFiles/SlipperyBot.dir/Card.cpp.o: ../Card.cpp
