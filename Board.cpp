@@ -105,10 +105,11 @@ void Board::remove_card_from_hand(Hand* hand, Card card)
     print_hand(*hand);
     for(std::vector<Card>::iterator it = hand->begin(); it != hand->end(); ++it) {
         if(it->get_suit() == card.get_suit() && it->get_rank() == card.get_rank()) {
-            it = hand->erase(it);
+            hand->erase(it);
+            print_hand(*hand);
+            return;
         }
     }
-    print_hand(*hand);
 }
 
 int Board::get_next_player(int player_number)
