@@ -2,11 +2,24 @@
 // Created by jamie on 11/06/18.
 //
 
+#include <iostream>
 #include "Trick.h"
+
+void Trick::print_trick()
+{
+    std::cout << "Printing trick...." << std::endl;
+    for(std::vector<player_move>::iterator it = m_trick_pile.begin(); it != m_trick_pile.end(); ++it) {
+        Card card = std::get<1>(*it);
+        std::cout << "Card is " << card.Card2Str() << std::endl;
+    }
+    std::cout << "...." << std::endl;
+}
+
 
 trick_result Trick::player_plays_card(player_move given_move)
 {
     m_trick_pile.push_back(given_move);
+    print_trick();
 
     if(m_trick_pile.size() == 4) {
         std::vector<player_move> suited_plays;

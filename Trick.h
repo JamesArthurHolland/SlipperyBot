@@ -24,6 +24,7 @@ public:
     trick_result player_plays_card(player_move given_move);
     bool isEmpty();
     int getSuitAsked();
+    void print_trick();
 private:
     int m_suit_asked = 3; // Change to not magic
     int m_trump_suit;

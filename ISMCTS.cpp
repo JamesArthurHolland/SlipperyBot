@@ -7,6 +7,13 @@
 #include "Node.h"
 #include "Board.h"
 
+void print_move(player_move move) {
+  int player_number;
+  Card card;
+  std::tie(player_number, card) = move;
+  std::cout << "Player " << player_number << " plays " << card.Card2Str() << std::endl;
+}
+
 player_move ISMCTS::run_search(Board root_state, int itermax)
 {
     Node* root = new Node();
@@ -20,11 +27,11 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
         state.randomize(root_state.get_player_to_move()); // create a determination
 
         // Select
-
-        while(state.get_moves().size() != 0 && node->get_untried_moves(state.get_moves()).size() != 0) {
+        while(state.get_moves().size() != 0 && node->get_untried_moves(state.get_moves()).size() == 0) {
             Node* selected_node = node->UCB_select_child(state.get_moves());
             if(selected_node != NULL) {
                 player_move* move = selected_node->get_move();
+                print_move(*move);
                 state.do_move(*move);
                 node = selected_node;
             }
@@ -37,6 +44,7 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
             int randomIndex = rand() % untried_moves.size();
             Card card = untried_moves.at(randomIndex);
             player_move p_move = std::make_tuple(state.get_player_to_move(), card);
+            print_move(p_move);
             state.do_move(p_move);
             node = node->add_child(p_move);
         }
@@ -47,6 +55,7 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
             std::cout << "-------" << std::endl;
             Card card = state.get_moves().at(randomIndex);
             player_move p_move = std::make_tuple(state.get_player_to_move(), card);
+            print_move(p_move);
             state.do_move(p_move);
         }
 

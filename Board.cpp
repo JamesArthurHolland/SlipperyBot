@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <random>
 #include "Board.h"
 #include "Deck.h"
 #include "Node.h"
@@ -90,13 +91,24 @@ int Board::get_result(int player_number) // TODO implement draw - 2 people have 
     return 0;
 }
 
+void print_hand(Hand hand)
+{
+  std::cout << "Printing hand...." << std::endl;
+  for(std::vector<Card>::iterator it = hand.begin(); it != hand.end(); ++it) {
+    std::cout << "Card is " << it->Card2Str() << std::endl;
+  }
+  std::cout << "...." << std::endl;
+}
+
 void Board::remove_card_from_hand(Hand* hand, Card card)
 {
+    print_hand(*hand);
     for(std::vector<Card>::iterator it = hand->begin(); it != hand->end(); ++it) {
         if(it->get_suit() == card.get_suit() && it->get_rank() == card.get_rank()) {
             it = hand->erase(it);
         }
     }
+    print_hand(*hand);
 }
 
 int Board::get_next_player(int player_number)
@@ -135,7 +147,10 @@ std::vector<Card> Board::get_moves()
 
 void Board::do_move(player_move move)
 {
-    Card card = std::get<1>(move);
+    int player_number;
+    Card card;
+    std::tie(player_number, card) = move;
+
     if(m_current_trick == NULL) {
         int suit_asked = card.get_suit();
         m_current_trick = new Trick(m_current_trump_suit, suit_asked);
@@ -146,15 +161,15 @@ void Board::do_move(player_move move)
     m_discard_pile.push_back(card);
 
     trick_result result = m_current_trick->player_plays_card(move);
-    int trick_result_code;
-    int player_number;
+    int trick_result_code = std::get<0>(result);
+    int trick_winning_player_number;
     int score;
-    std::tie(trick_result_code, player_number, score) = result;
+    std::tie(trick_result_code, trick_winning_player_number, score) = result;
 
+    Hand* hand = m_player_hands[player_number];
+    remove_card_from_hand(hand, card);
     if(trick_result_code == Trick::TRICK_RESULT_CODE_FINISHED) {
-        Hand* hand = m_player_hands.find(player_number)->second;
-        remove_card_from_hand(hand, card);
-        m_player_scores[player_number] = m_player_scores[player_number] + score;
+        m_player_scores[trick_winning_player_number] = m_player_scores[trick_winning_player_number] + score;
         m_player_to_move = std::get<1>(result);
         m_current_trick = NULL;
     }

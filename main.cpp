@@ -3,11 +3,11 @@
 #include "Board.h"
 #include "ISMCTS.h"
 
-void print_move(player_move move) {
-    int player_number;
-    Card card;
-    std::tie(player_number, card) = move;
-    std::cout << "Player " << player_number << " plays " << card.Card2Str();
+void print_1_move(player_move move) {
+  int player_number;
+  Card card;
+  std::tie(player_number, card) = move;
+  std::cout << "Player: " << player_number << " plays " << card.Card2Str() << std::endl;
 }
 
 int main() {
@@ -24,8 +24,9 @@ int main() {
         else {
             move = board.getRandomLegalCard(board.get_player_to_move());
         }
-        print_move(move);
         board.do_move(move);
+        print_1_move(move);
+        std::cout << "next trick:" << std::endl;
     }
 
     return 0;

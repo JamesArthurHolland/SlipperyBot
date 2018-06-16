@@ -23,6 +23,7 @@ public:
     ~Board() { delete m_current_trick; }
 
     std::vector<Card> get_moves();
+    std::map<int, Hand*> m_player_hands;
     int get_next_player(int player_number);
     int get_player_to_move();
     int get_result(int player_number);
@@ -34,7 +35,6 @@ public:
     player_move getRandomLegalCard(int player_number);
 private:
     int m_player_to_move = 1;
-    std::map<int, Hand*> m_player_hands;
     std::vector<Card> m_discard_pile;
 
     std::map<int, int>  m_player_scores;
