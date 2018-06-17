@@ -24,8 +24,9 @@ int main() {
         else {
             move = board.getRandomLegalCard(board.get_player_to_move());
         }
+        std::cout << "befores:" << board.get_moves().size() << std::endl;
         board.do_move(move);
-        print_1_move(move);
+        std::cout << "afters:" << std::endl;
         std::cout << "next trick:" << std::endl;
     }
 

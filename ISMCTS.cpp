@@ -64,6 +64,9 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
             node->update(state);
             node = node->m_parent_node;
         }
+
+
+        std::cout << "----" << std::endl;
     }
 
 
