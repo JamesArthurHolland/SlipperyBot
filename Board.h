@@ -39,6 +39,8 @@ public:
 
 
     player_move getRandomLegalCard(int player_number);
+
+    Trick *m_current_trick;
 private:
     int m_player_to_move = 1;
     std::vector<Card> m_discard_pile;
@@ -47,7 +49,6 @@ private:
 
     void remove_card_from_hand(Hand* hand, Card card);
 
-    Trick *m_current_trick;
     int m_current_trump_suit = 3; // TODO pass without magic.
 };
 

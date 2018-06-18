@@ -104,7 +104,7 @@ void Board::remove_card_from_hand(Hand* hand, Card card)
     for(std::vector<Card>::iterator it = hand->begin(); it != hand->end(); ++it) {
         if(it->get_suit() == card.get_suit() && it->get_rank() == card.get_rank()) {
             hand->erase(it);
-            print_hand(*hand);
+//            print_hand(*hand);
             return;
         }
     }

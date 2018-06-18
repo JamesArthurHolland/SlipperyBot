@@ -17,7 +17,12 @@ public:
     explicit Card(const int &suit, const int &rank);
 
     bool operator<( const Card& other_card ) const {
-        return m_rank > other_card.get_rank();
+        if (m_rank != other_card.get_rank()) {
+            return m_rank < other_card.get_rank();
+        }
+        else {
+            return m_suit < other_card.m_suit;
+        }
     }
 
     std::string Card2Str() const;

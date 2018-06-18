@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/jamie/SlipperyBot/Board.cpp
+/home/jamie/ClionProjects/SlipperyBot/Board.cpp
 algorithm
 -
 chrono
@@ -14,31 +14,31 @@ chrono
 random
 -
 Board.h
-/home/jamie/SlipperyBot/Board.h
+/home/jamie/ClionProjects/SlipperyBot/Board.h
 Deck.h
-/home/jamie/SlipperyBot/Deck.h
+/home/jamie/ClionProjects/SlipperyBot/Deck.h
 Node.h
-/home/jamie/SlipperyBot/Node.h
+/home/jamie/ClionProjects/SlipperyBot/Node.h
 
-/home/jamie/SlipperyBot/Board.h
+/home/jamie/ClionProjects/SlipperyBot/Board.h
 vector
 -
 map
 -
 Card.h
-/home/jamie/SlipperyBot/Card.h
+/home/jamie/ClionProjects/SlipperyBot/Card.h
 Trick.h
-/home/jamie/SlipperyBot/Trick.h
+/home/jamie/ClionProjects/SlipperyBot/Trick.h
 
-/home/jamie/SlipperyBot/Card.cpp
+/home/jamie/ClionProjects/SlipperyBot/Card.cpp
 stdlib.h
 -
 Card.h
-/home/jamie/SlipperyBot/Card.h
+/home/jamie/ClionProjects/SlipperyBot/Card.h
 iostream
 -
 
-/home/jamie/SlipperyBot/Card.h
+/home/jamie/ClionProjects/SlipperyBot/Card.h
 string
 -
 tuple
@@ -46,13 +46,13 @@ tuple
 vector
 -
 
-/home/jamie/SlipperyBot/Deck.cpp
+/home/jamie/ClionProjects/SlipperyBot/Deck.cpp
 iostream
 -
 Deck.h
-/home/jamie/SlipperyBot/Deck.h
+/home/jamie/ClionProjects/SlipperyBot/Deck.h
 Card.h
-/home/jamie/SlipperyBot/Card.h
+/home/jamie/ClionProjects/SlipperyBot/Card.h
 algorithm
 -
 random
@@ -60,7 +60,7 @@ random
 chrono
 -
 
-/home/jamie/SlipperyBot/Deck.h
+/home/jamie/ClionProjects/SlipperyBot/Deck.h
 vector
 -
 iostream
@@ -68,61 +68,65 @@ iostream
 fstream
 -
 Card.h
-/home/jamie/SlipperyBot/Card.h
+/home/jamie/ClionProjects/SlipperyBot/Card.h
 
-/home/jamie/SlipperyBot/ISMCTS.cpp
+/home/jamie/ClionProjects/SlipperyBot/ISMCTS.cpp
 iostream
 -
 ISMCTS.h
-/home/jamie/SlipperyBot/ISMCTS.h
+/home/jamie/ClionProjects/SlipperyBot/ISMCTS.h
 Node.h
-/home/jamie/SlipperyBot/Node.h
+/home/jamie/ClionProjects/SlipperyBot/Node.h
 Board.h
-/home/jamie/SlipperyBot/Board.h
+/home/jamie/ClionProjects/SlipperyBot/Board.h
 
-/home/jamie/SlipperyBot/ISMCTS.h
+/home/jamie/ClionProjects/SlipperyBot/ISMCTS.h
 Trick.h
-/home/jamie/SlipperyBot/Trick.h
+/home/jamie/ClionProjects/SlipperyBot/Trick.h
 Board.h
-/home/jamie/SlipperyBot/Board.h
+/home/jamie/ClionProjects/SlipperyBot/Board.h
 
-/home/jamie/SlipperyBot/Node.cpp
+/home/jamie/ClionProjects/SlipperyBot/Node.cpp
 Node.h
-/home/jamie/SlipperyBot/Node.h
+/home/jamie/ClionProjects/SlipperyBot/Node.h
 Board.h
-/home/jamie/SlipperyBot/Board.h
+/home/jamie/ClionProjects/SlipperyBot/Board.h
 cmath
 -
+algorithm
+-
 
-/home/jamie/SlipperyBot/Node.h
+/home/jamie/ClionProjects/SlipperyBot/Node.h
 Trick.h
-/home/jamie/SlipperyBot/Trick.h
+/home/jamie/ClionProjects/SlipperyBot/Trick.h
 Board.h
-/home/jamie/SlipperyBot/Board.h
+/home/jamie/ClionProjects/SlipperyBot/Board.h
 vector
 -
 
-/home/jamie/SlipperyBot/Trick.cpp
+/home/jamie/ClionProjects/SlipperyBot/Trick.cpp
 iostream
 -
 Trick.h
-/home/jamie/SlipperyBot/Trick.h
+/home/jamie/ClionProjects/SlipperyBot/Trick.h
 
-/home/jamie/SlipperyBot/Trick.h
+/home/jamie/ClionProjects/SlipperyBot/Trick.h
 tuple
 -
 vector
 -
 Card.h
-/home/jamie/SlipperyBot/Card.h
+/home/jamie/ClionProjects/SlipperyBot/Card.h
 
-/home/jamie/SlipperyBot/main.cpp
+/home/jamie/ClionProjects/SlipperyBot/main.cpp
 iostream
 -
+algorithm
+-
 Deck.h
-/home/jamie/SlipperyBot/Deck.h
+/home/jamie/ClionProjects/SlipperyBot/Deck.h
 Board.h
-/home/jamie/SlipperyBot/Board.h
+/home/jamie/ClionProjects/SlipperyBot/Board.h
 ISMCTS.h
-/home/jamie/SlipperyBot/ISMCTS.h
+/home/jamie/ClionProjects/SlipperyBot/ISMCTS.h
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "Deck.h"
 #include "Board.h"
 #include "ISMCTS.h"
@@ -19,16 +20,16 @@ int main() {
     while (board.get_moves().size() != 0) {
         player_move move;
         if(board.get_player_to_move() == 1) {
-            move = ISMCTS::run_search(board, 10);
+            move = ISMCTS::run_search(board, 10); // TODO change to deeper iteration number
         }
         else {
             move = board.getRandomLegalCard(board.get_player_to_move());
         }
-        std::cout << "befores:" << board.get_moves().size() << std::endl;
+        print_1_move(move);
         board.do_move(move);
-        std::cout << "afters:" << std::endl;
-        std::cout << "next trick:" << std::endl;
+        if(board.m_current_trick != NULL) {
+            board.m_current_trick->print_trick();
+        }
     }
-
     return 0;
 }

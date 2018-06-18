@@ -26,6 +26,7 @@ public:
 
     std::vector<Card>   get_untried_moves(std::vector<Card> legalMoves);
     player_move*        get_move();
+    player_move         get_move_from_most_visited_child_node();
     float               get_UCB_score();
     void                update(Board state);
 

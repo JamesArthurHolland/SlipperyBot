@@ -19,9 +19,9 @@ void Trick::print_trick()
 trick_result Trick::player_plays_card(player_move given_move)
 {
     m_trick_pile.push_back(given_move);
-    print_trick();
 
     if(m_trick_pile.size() == 4) {
+//        print_trick();
         std::vector<player_move> suited_plays;
         std::vector<player_move> trump_plays;
 

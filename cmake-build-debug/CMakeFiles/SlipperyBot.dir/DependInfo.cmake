@@ -4,13 +4,13 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/jamie/SlipperyBot/Board.cpp" "/home/jamie/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/Board.cpp.o"
-  "/home/jamie/SlipperyBot/Card.cpp" "/home/jamie/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/Card.cpp.o"
-  "/home/jamie/SlipperyBot/Deck.cpp" "/home/jamie/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/Deck.cpp.o"
-  "/home/jamie/SlipperyBot/ISMCTS.cpp" "/home/jamie/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/ISMCTS.cpp.o"
-  "/home/jamie/SlipperyBot/Node.cpp" "/home/jamie/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/Node.cpp.o"
-  "/home/jamie/SlipperyBot/Trick.cpp" "/home/jamie/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/Trick.cpp.o"
-  "/home/jamie/SlipperyBot/main.cpp" "/home/jamie/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/main.cpp.o"
+  "/home/jamie/ClionProjects/SlipperyBot/Board.cpp" "/home/jamie/ClionProjects/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/Board.cpp.o"
+  "/home/jamie/ClionProjects/SlipperyBot/Card.cpp" "/home/jamie/ClionProjects/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/Card.cpp.o"
+  "/home/jamie/ClionProjects/SlipperyBot/Deck.cpp" "/home/jamie/ClionProjects/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/Deck.cpp.o"
+  "/home/jamie/ClionProjects/SlipperyBot/ISMCTS.cpp" "/home/jamie/ClionProjects/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/ISMCTS.cpp.o"
+  "/home/jamie/ClionProjects/SlipperyBot/Node.cpp" "/home/jamie/ClionProjects/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/Node.cpp.o"
+  "/home/jamie/ClionProjects/SlipperyBot/Trick.cpp" "/home/jamie/ClionProjects/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/Trick.cpp.o"
+  "/home/jamie/ClionProjects/SlipperyBot/main.cpp" "/home/jamie/ClionProjects/SlipperyBot/cmake-build-debug/CMakeFiles/SlipperyBot.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
