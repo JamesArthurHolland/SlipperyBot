@@ -18,7 +18,7 @@ std::vector<Card> Node::get_untried_moves(std::vector<Card> legalMoves)
             Card triedCard = std::get<1>(*tried_move);
             Card legalMove = (*legalMoveIterator);
             if(Card::compare_cards(legalMove, triedCard) == true) {
-                legalMoves.erase(legalMoveIterator);
+                legalMoveIterator = legalMoves.erase(legalMoveIterator);
             }
         }
     }

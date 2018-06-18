@@ -20,7 +20,12 @@ public:
 
     Board();
     Board( const Board &obj);
-    ~Board() { delete m_current_trick; }
+    ~Board() {
+      delete m_current_trick;
+//      for(std::map<int, Hand*>::iterator it = m_player_hands.begin(); it != m_player_hands.end(); ++it) {
+//        delete(it->second);
+//      }
+    }
 
     std::vector<Card> get_moves();
     std::map<int, Hand*> m_player_hands;
@@ -30,6 +35,7 @@ public:
 
     void do_move(player_move move);
     void randomize(int player_number);
+    void print_hand(Hand hand);
 
 
     player_move getRandomLegalCard(int player_number);

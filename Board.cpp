@@ -46,7 +46,6 @@ Board::Board(const Board &obj)
 {
     m_player_to_move = obj.m_player_to_move;
     m_discard_pile = obj.m_discard_pile;
-    m_player_hands = obj.m_player_hands;
     m_player_scores = obj.m_player_scores;
     m_current_trump_suit = obj.m_current_trump_suit;
     m_current_trick = NULL;
@@ -91,7 +90,7 @@ int Board::get_result(int player_number) // TODO implement draw - 2 people have 
     return 0;
 }
 
-void print_hand(Hand hand)
+void Board::print_hand(Hand hand)
 {
   std::cout << "Printing hand...." << std::endl;
   for(std::vector<Card>::iterator it = hand.begin(); it != hand.end(); ++it) {
@@ -102,7 +101,6 @@ void print_hand(Hand hand)
 
 void Board::remove_card_from_hand(Hand* hand, Card card)
 {
-    print_hand(*hand);
     for(std::vector<Card>::iterator it = hand->begin(); it != hand->end(); ++it) {
         if(it->get_suit() == card.get_suit() && it->get_rank() == card.get_rank()) {
             hand->erase(it);

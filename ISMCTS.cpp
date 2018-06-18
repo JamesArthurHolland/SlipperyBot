@@ -14,6 +14,13 @@ void print_move(player_move move) {
   std::cout << "Player " << player_number << " plays " << card.Card2Str() << std::endl;
 }
 
+void print_all_hands(Board board) {
+    std::cout << "============== " << std::endl;
+    for(auto const &pair : board.m_player_hands) {
+        board.print_hand(*pair.second);
+    }
+}
+
 player_move ISMCTS::run_search(Board root_state, int itermax)
 {
     Node* root = new Node();
@@ -24,10 +31,14 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
         node = root;
 
         Board state = root_state; // deep clone using copy constructor
+        print_all_hands(state);
         state.randomize(root_state.get_player_to_move()); // create a determination
+        print_all_hands(state);
 
         // Select
-        while(state.get_moves().size() != 0 && node->get_untried_moves(state.get_moves()).size() == 0) {
+        int number_of_moves = state.get_moves().size();
+        int number_of_untried_moves = node->get_untried_moves(state.get_moves()).size();
+        while(number_of_moves != 0 && number_of_untried_moves == 0) {
             Node* selected_node = node->UCB_select_child(state.get_moves());
             if(selected_node != NULL) {
                 player_move* move = selected_node->get_move();
@@ -59,8 +70,10 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
             state.do_move(p_move);
         }
 
+//        print_all_hands(state);
+
         // Backpropagate
-        while(node != NULL) {
+        while(node->m_parent_node != NULL) {
             node->update(state);
             node = node->m_parent_node;
         }
@@ -69,5 +82,5 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
         std::cout << "----" << std::endl;
     }
 
-
+    delete root;
 }
