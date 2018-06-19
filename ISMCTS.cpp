@@ -60,7 +60,9 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
         }
 
         // Simulate
-        while(state.get_moves().size() != 0) {
+        number_of_moves = state.get_moves().size();
+        std::vector<Card> test_get_moves = state.get_moves();
+        while( ! state.get_moves().empty() ) {
             int randomIndex = rand() % state.get_moves().size();
             Card card = state.get_moves().at(randomIndex);
             player_move p_move = std::make_tuple(state.get_player_to_move(), card);

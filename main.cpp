@@ -27,8 +27,15 @@ int main() {
         }
         print_1_move(move);
         board.do_move(move);
+        std::cout << "Discard pile size: " << board.discard_pile_size() << std::endl;
         if(board.m_current_trick != NULL) {
             board.m_current_trick->print_trick();
+        }
+        else {
+            std::cout << "Card amounts: " << board.m_player_hands[1]->size();
+            std::cout << " " << board.m_player_hands[2]->size();
+            std::cout << " " << board.m_player_hands[3]->size();
+            std::cout << " " << board.m_player_hands[4]->size() << std::endl;
         }
     }
     return 0;

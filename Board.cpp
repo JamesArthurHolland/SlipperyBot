@@ -124,26 +124,32 @@ int Board::get_player_to_move()
 
 std::vector<Card> Board::get_moves()
 {
-    Hand* hand = m_player_hands[m_player_to_move];
+    if(m_player_hands.count(m_player_to_move) == 1) { // hand exists still (cards left)
+        Hand* hand = m_player_hands[m_player_to_move];
+        if(hand->size() == 1) {
+            return *hand;
+        }
 
-    if(m_current_trick == NULL) {
-        return *hand;
-    }
-    else{
-        Hand legalMovesFromHand;
-        bool has_cards_of_asked_suit = false;
-        for(Hand::iterator it = hand->begin(); it != hand->end(); ++it) {
-            if(it->get_suit() == m_current_trick->getSuitAsked()) {
-                has_cards_of_asked_suit = true;
-                Card card(it->get_suit(), it->get_rank());
-                legalMovesFromHand.push_back(card);
+        if(m_current_trick == NULL) {
+            return *hand;
+        }
+        else{
+            Hand legalMovesFromHand;
+            bool has_cards_of_asked_suit = false;
+            for(Hand::iterator it = hand->begin(); it != hand->end(); ++it) {
+                if(it->get_suit() == m_current_trick->getSuitAsked()) {
+                    has_cards_of_asked_suit = true;
+                    Card card(it->get_suit(), it->get_rank());
+                    legalMovesFromHand.push_back(card);
+                }
             }
+            if(has_cards_of_asked_suit) {
+                return legalMovesFromHand;
+            }
+            return *hand;
         }
-        if(has_cards_of_asked_suit) {
-            return legalMovesFromHand;
-        }
-        return *hand;
     }
+    return std::vector<Card>();
 }
 
 void Board::do_move(player_move move)
@@ -176,6 +182,11 @@ void Board::do_move(player_move move)
     }
 }
 
+int Board::discard_pile_size()
+{
+    return m_discard_pile.size();
+}
+
 void Board::randomize(int player_number)
 {
     std::vector<Card> deck;
@@ -191,22 +202,27 @@ void Board::randomize(int player_number)
     std::default_random_engine e(seed);
     std::shuffle(std::begin(deck), std::end(deck), e);
 
-    while(deck.size() != 0) {
-        for (unsigned int i(1); i < 5; ++i)
-        {
-            if(i != player_number) {
-                Card card(deck.back().get_suit(), deck.back().get_rank());
-                deck.pop_back();
+    unsigned int current_player_number = 1;
+    if(m_current_trick != NULL) {
+        // People who've already played in trick will be down cards.
+        // Dealing from this player means always have same number of cards after trick
+        current_player_number = m_player_to_move;
+    }
+    while ( deck.size() != 0 )
+    {
+        if(current_player_number != player_number) {
+            Card card(deck.back().get_suit(), deck.back().get_rank());
+            deck.pop_back();
 
-                if (m_player_hands.count(i) == 1) { // if value exists for key
-                    m_player_hands[i]->push_back(card);
-                }
-                else{
-                    Hand* newHand = new Hand();
-                    newHand->push_back(card);
-                    m_player_hands.insert(std::pair<int, Hand*>(i, newHand));
-                }
+            if (m_player_hands.count(current_player_number) == 1) { // if value exists for key
+                m_player_hands[current_player_number]->push_back(card);
+            }
+            else{
+                Hand* newHand = new Hand();
+                newHand->push_back(card);
+                m_player_hands.insert(std::pair<int, Hand*>(current_player_number, newHand));
             }
         }
+        current_player_number = get_next_player(current_player_number);
     }
 }
