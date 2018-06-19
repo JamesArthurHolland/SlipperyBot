@@ -61,11 +61,13 @@ player_move Board::getRandomLegalCard(int player_number)
     Hand* players_Hand = m_player_hands[player_number];
 
     // First loop for asked suit
-    for(std::vector<Card>::iterator it = players_Hand->begin(); it != players_Hand->end(); ++it) {
-        if(it->get_suit() == m_current_trick->getSuitAsked()) {
-            Card card(it->get_suit(), it->get_rank());
-            return std::make_tuple(player_number, card);
+    if(m_current_trick != NULL) {
+      for(std::vector<Card>::iterator it = players_Hand->begin(); it != players_Hand->end(); ++it) {
+        if (it->get_suit() == m_current_trick->getSuitAsked()) {
+          Card card(it->get_suit(), it->get_rank());
+          return std::make_tuple(player_number, card);
         }
+      }
     }
 
     //Return first legal card - already shuffled so already random
