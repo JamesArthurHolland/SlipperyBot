@@ -38,5 +38,6 @@ int main() {
             std::cout << " " << board.m_player_hands[4]->size() << std::endl;
         }
     }
+    std::cout << "Finished: " << std::endl;
     return 0;
 }
