@@ -39,7 +39,6 @@ Board::Board() : m_current_trick(NULL)
         m_player_hands[3]->push_back(deck.getOneCard());
         m_player_hands[4]->push_back(deck.getOneCard());
     }
-    std::cout << "Board constructor." << std::endl;
 
     for (unsigned int i(1); i < 5; ++i)
     {
@@ -159,7 +158,7 @@ std::vector<Card> Board::get_moves()
 
 void Board::print_scores()
 {
-    std::cout << "Scores: " << m_player_scores[1];
+    std::cout << m_player_scores[1];
     std::cout << " " << m_player_scores[2];
     std::cout << " " << m_player_scores[3];
     std::cout << " " << m_player_scores[4] << std::endl;
