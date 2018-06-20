@@ -40,6 +40,11 @@ Board::Board() : m_current_trick(NULL)
         m_player_hands[4]->push_back(deck.getOneCard());
     }
     std::cout << "Board constructor." << std::endl;
+
+    for (unsigned int i(1); i < 5; ++i)
+    {
+        m_player_scores[i] = 0;
+    }
 }
 
 Board::Board(const Board &obj)
@@ -150,6 +155,14 @@ std::vector<Card> Board::get_moves()
         }
     }
     return std::vector<Card>();
+}
+
+void Board::print_scores()
+{
+    std::cout << "Scores: " << m_player_scores[1];
+    std::cout << " " << m_player_scores[2];
+    std::cout << " " << m_player_scores[3];
+    std::cout << " " << m_player_scores[4] << std::endl;
 }
 
 void Board::do_move(player_move move)

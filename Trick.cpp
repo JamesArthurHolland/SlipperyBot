@@ -15,6 +15,26 @@ void Trick::print_trick()
     std::cout << "...." << std::endl;
 }
 
+int Trick::get_score_for_trick()
+{
+    int current_score = 0;
+    for (unsigned int i(0); i < m_trick_pile.size(); ++i) {
+        player_move play = m_trick_pile.at(i);
+        Card current_card = std::get<1>(play);
+        if(current_card.get_suit() == 1) { // TODO not magic for heart
+            if(current_card.get_rank() == 0 || current_card.get_rank() > 9) {
+              current_score += 10; // TODO not magic for points for face cards
+            }
+            else {
+              current_score += 5; // TODO not magic for points for non face cards
+            }
+        }
+        if(current_card.get_suit() == 1 && current_card.get_rank() == 11) { // TODO not magic for spades suit
+          current_score += 5; // TODO not magic for points for queen of spades
+        }
+    }
+    return current_score;
+}
 
 trick_result Trick::player_plays_card(player_move given_move)
 {
@@ -42,7 +62,7 @@ trick_result Trick::player_plays_card(player_move given_move)
         trick_result result = std::make_tuple(
                 result_code,
                 std::get<0>(concatenated_plays.back()),
-                100 // TODO get score for trick
+                get_score_for_trick()
         );
 
         return result;
@@ -55,6 +75,7 @@ trick_result Trick::player_plays_card(player_move given_move)
             -1
     );
 }
+
 
 bool Trick::isEmpty()
 {

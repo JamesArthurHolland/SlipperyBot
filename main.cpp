@@ -36,6 +36,7 @@ int main() {
             std::cout << " " << board.m_player_hands[2]->size();
             std::cout << " " << board.m_player_hands[3]->size();
             std::cout << " " << board.m_player_hands[4]->size() << std::endl;
+            board.print_scores();
         }
     }
     std::cout << "Finished: " << std::endl;

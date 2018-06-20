@@ -33,6 +33,8 @@ public:
     int get_player_to_move();
     int get_result(int player_number);
 
+    void print_scores();
+
     void do_move(player_move move);
     void randomize(int player_number);
     void print_hand(Hand hand);

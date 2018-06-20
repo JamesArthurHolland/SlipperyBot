@@ -31,6 +31,7 @@ private:
     std::vector<player_move> m_trick_pile;
 
     bool compare_cards_in_trick_pile();
+    int get_score_for_trick();
 };
 
 
