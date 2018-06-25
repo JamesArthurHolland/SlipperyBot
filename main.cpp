@@ -25,7 +25,7 @@ int main() {
         while (board.get_moves().size() != 0) {
             player_move move;
             if(board.get_player_to_move() == 1) {
-                move = ISMCTS::run_search(board, 100); // TODO change to deeper iteration number - pass in from commandline?
+                move = ISMCTS::run_search(board, 1000); // TODO change to deeper iteration number - pass in from commandline?
             }
             else {
                 move = board.getRandomLegalCard(board.get_player_to_move());

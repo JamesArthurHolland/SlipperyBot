@@ -47,7 +47,7 @@ public:
 
     Trick *m_current_trick;
 private:
-    int m_player_to_move = 1;
+    int m_player_to_move;
     std::vector<Card> m_discard_pile;
 
     std::map<int, int>  m_player_scores;

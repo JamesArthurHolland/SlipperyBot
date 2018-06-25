@@ -44,6 +44,8 @@ Board::Board() : m_current_trick(NULL)
     {
         m_player_scores[i] = 0;
     }
+
+    m_player_to_move = rand() % 4 + 1;
 }
 
 Board::Board(const Board &obj)
