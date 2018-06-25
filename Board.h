@@ -39,6 +39,8 @@ public:
     void randomize(int player_number);
     void print_hand(Hand hand);
 
+    int get_winner();
+
     int discard_pile_size();
 
     player_move getRandomLegalCard(int player_number);
