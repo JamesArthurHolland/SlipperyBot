@@ -57,9 +57,6 @@ Board::Board() : m_current_trick(NULL)
     SuitPlayCapability player4_suit_capability;
     m_player_suited_capabilities.insert(std::pair<int, SuitPlayCapability>(4, player4_suit_capability));
 
-
-    std::cout << "Board constructor." << std::endl;
-
     m_player_to_move = rand() % 4 + 1; // TODO
 }
 
@@ -215,7 +212,7 @@ void Board::do_move(player_move move)
         m_current_trick = new Trick(m_current_trump_suit, suit_asked);
     }
     if(card.get_suit() != m_current_trick->getSuitAsked()) {
-        std::cout << "Player " << player_number  << " can no longer play: " << m_current_trick->getSuitAsked() << std::endl;
+//        std::cout << "Player " << player_number  << " can no longer play: " << m_current_trick->getSuitAsked() << std::endl;
         m_player_suited_capabilities[player_number].can_play_suit(m_current_trick->getSuitAsked(), false);
     }
 
