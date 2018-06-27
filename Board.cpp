@@ -70,7 +70,14 @@ Board::Board(const Board &obj)
     m_player_scores = obj.m_player_scores;
     m_player_suited_capabilities = obj.m_player_suited_capabilities;
     m_current_trump_suit = obj.m_current_trump_suit;
-    m_current_trick = NULL;
+    if(obj.m_current_trick == NULL) {
+        m_current_trick = NULL;
+    }
+    else{
+        Trick trick = *obj.m_current_trick;
+        m_current_trick = new Trick();
+        *m_current_trick = trick;
+    }
     for(auto const &pair : obj.m_player_hands) {
         Hand* newHandPointer = new Hand();
         *newHandPointer = *pair.second;
@@ -208,6 +215,7 @@ void Board::do_move(player_move move)
         m_current_trick = new Trick(m_current_trump_suit, suit_asked);
     }
     if(card.get_suit() != m_current_trick->getSuitAsked()) {
+        std::cout << "Player " << player_number  << " can no longer play: " << m_current_trick->getSuitAsked() << std::endl;
         m_player_suited_capabilities[player_number].can_play_suit(m_current_trick->getSuitAsked(), false);
     }
 

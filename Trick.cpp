@@ -5,6 +5,15 @@
 #include <iostream>
 #include "Trick.h"
 
+Trick::Trick(const Trick &obj)
+{
+    m_suit_asked = obj.m_suit_asked;
+    m_trump_suit = obj.m_trump_suit;
+    for(auto const &move : obj.m_trick_pile) {
+        m_trick_pile.push_back(move);
+    }
+}
+
 void Trick::print_trick()
 {
     std::cout << "Printing trick...." << std::endl;

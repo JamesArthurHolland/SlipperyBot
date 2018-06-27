@@ -26,6 +26,10 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
     Node* root = new Node();
 
     for (unsigned int i(0); i < itermax; ++i) {
+        int number_of_moves = root_state.get_moves().size();
+        if(number_of_moves == 1) {
+            return std::make_tuple(root_state.get_player_to_move(), root_state.get_moves().front());
+        }
         Node* node;
         node = root;
 
@@ -35,12 +39,8 @@ player_move ISMCTS::run_search(Board root_state, int itermax)
 //        print_all_hands(state);
 
         // Select
-        int number_of_moves = state.get_moves().size();
         int number_of_untried_moves = node->get_untried_moves(state.get_moves()).size();
 
-        if(number_of_moves == 1) {
-            return std::make_tuple(state.get_player_to_move(), state.get_moves().front());
-        }
         while(number_of_moves != 0 && number_of_untried_moves == 0) {
             Node* selected_node = node->UCB_select_child(state.get_moves());
             if(selected_node != NULL) {

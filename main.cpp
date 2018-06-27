@@ -11,6 +11,15 @@ void print_1_move(player_move move) {
   std::cout << "Player: " << player_number << " plays " << card.Card2Str() << std::endl;
 }
 
+void print_moves(std::vector<Card> cards)
+{
+    std::cout << "Printing moves...." << std::endl;
+    for(std::vector<Card>::iterator it = cards.begin(); it != cards.end(); ++it) {
+        std::cout << "Card is " << it->Card2Str() << std::endl;
+    }
+    std::cout << "...." << std::endl;
+}
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
   int a = 0;
@@ -24,6 +33,7 @@ int main() {
     // loop through trumps
         while (board.get_moves().size() != 0) {
             player_move move;
+            print_moves(board.get_moves());
             if(board.get_player_to_move() == 1) {
                 move = ISMCTS::run_search(board, 10); // TODO change to deeper iteration number - pass in from commandline?
             }
