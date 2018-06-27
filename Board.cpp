@@ -44,6 +44,21 @@ Board::Board() : m_current_trick(NULL)
     {
         m_player_scores[i] = 0;
     }
+
+    SuitPlayCapability player1_suit_capability;
+    m_player_suited_capabilities.insert(std::pair<int, SuitPlayCapability>(1, player1_suit_capability));
+
+    SuitPlayCapability player2_suit_capability;
+    m_player_suited_capabilities.insert(std::pair<int, SuitPlayCapability>(2, player2_suit_capability));
+
+    SuitPlayCapability player3_suit_capability;
+    m_player_suited_capabilities.insert(std::pair<int, SuitPlayCapability>(3, player3_suit_capability));
+
+    SuitPlayCapability player4_suit_capability;
+    m_player_suited_capabilities.insert(std::pair<int, SuitPlayCapability>(4, player4_suit_capability));
+
+
+    std::cout << "Board constructor." << std::endl;
 }
 
 Board::Board(const Board &obj)
@@ -51,6 +66,7 @@ Board::Board(const Board &obj)
     m_player_to_move = obj.m_player_to_move;
     m_discard_pile = obj.m_discard_pile;
     m_player_scores = obj.m_player_scores;
+    m_player_suited_capabilities = obj.m_player_suited_capabilities;
     m_current_trump_suit = obj.m_current_trump_suit;
     m_current_trick = NULL;
     for(auto const &pair : obj.m_player_hands) {
@@ -105,12 +121,11 @@ void Board::print_hand(Hand hand)
   std::cout << "...." << std::endl;
 }
 
-void Board::remove_card_from_hand(Hand* hand, Card card)
+void Board::remove_card_from_cards(Hand* hand, Card card)
 {
     for(std::vector<Card>::iterator it = hand->begin(); it != hand->end(); ++it) {
         if(it->get_suit() == card.get_suit() && it->get_rank() == card.get_rank()) {
             hand->erase(it);
-//            print_hand(*hand);
             return;
         }
     }
@@ -174,10 +189,9 @@ void Board::do_move(player_move move)
         int suit_asked = card.get_suit();
         m_current_trick = new Trick(m_current_trump_suit, suit_asked);
     }
-
-    m_player_to_move = get_next_player(m_player_to_move);
-
-    m_discard_pile.push_back(card);
+    if(card.get_suit() != m_current_trick->getSuitAsked()) {
+        m_player_suited_capabilities[player_number].can_play_suit(m_current_trick->getSuitAsked(), false);
+    }
 
     trick_result result = m_current_trick->player_plays_card(move);
     int trick_result_code = std::get<0>(result);
@@ -186,12 +200,15 @@ void Board::do_move(player_move move)
     std::tie(trick_result_code, trick_winning_player_number, score) = result;
 
     Hand* hand = m_player_hands[player_number];
-    remove_card_from_hand(hand, card);
+    remove_card_from_cards(hand, card);
     if(trick_result_code == Trick::TRICK_RESULT_CODE_FINISHED) {
         m_player_scores[trick_winning_player_number] = m_player_scores[trick_winning_player_number] + score;
         m_player_to_move = std::get<1>(result);
         m_current_trick = NULL;
     }
+
+    m_discard_pile.push_back(card);
+    m_player_to_move = get_next_player(m_player_to_move);
 }
 
 int Board::discard_pile_size()
@@ -199,42 +216,65 @@ int Board::discard_pile_size()
     return m_discard_pile.size();
 }
 
+std::vector<Card> shuffle_cards(std::vector<Card> cards) {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine e(seed);
+    std::shuffle(std::begin(cards), std::end(cards), e);
+    return cards;
+}
+
+bool Board::suited_capabilities_met()
+{
+    for(auto const &pair : m_player_suited_capabilities) {
+        int player_number = pair.first;
+        SuitPlayCapability capability = pair.second;
+        Hand hand = *m_player_hands[player_number];
+        if(capability.are_capabilities_broken(hand)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void Board::randomize(int player_number)
 {
     std::vector<Card> deck;
-    for (unsigned int i(1); i < 5; ++i)
-    {
-        if(i != player_number) {
-            Hand hand = *m_player_hands[i];
-            m_player_hands.erase(i);
-            deck.insert(deck.end(), hand.begin(), hand.end());
-        }
-    }
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine e(seed);
-    std::shuffle(std::begin(deck), std::end(deck), e);
-
-    unsigned int current_player_number = 1;
-    if(m_current_trick != NULL) {
-        // People who've already played in trick will be down cards.
-        // Dealing from this player means always have same number of cards after trick
-        current_player_number = m_player_to_move;
-    }
-    while ( deck.size() != 0 )
-    {
-        if(current_player_number != player_number) {
-            Card card(deck.back().get_suit(), deck.back().get_rank());
-            deck.pop_back();
-
-            if (m_player_hands.count(current_player_number) == 1) { // if value exists for key
-                m_player_hands[current_player_number]->push_back(card);
-            }
-            else{
-                Hand* newHand = new Hand();
-                newHand->push_back(card);
-                m_player_hands.insert(std::pair<int, Hand*>(current_player_number, newHand));
+    do {
+        for (unsigned int i(1); i < 5; ++i) // get all the unknown cards, ie the players hands
+        {
+            if(i != player_number) {
+                Hand hand = *m_player_hands[i];
+                m_player_hands.erase(i);
+                deck.insert(deck.end(), hand.begin(), hand.end());
             }
         }
-        current_player_number = get_next_player(current_player_number);
+        deck = shuffle_cards(deck);
+
+        unsigned int current_player_number = 1; // TODO better nomenclature, conflicts with param
+        if(m_current_trick != NULL) {
+            // People who've already played in trick will be down cards.
+            // Dealing from this player means always have same number of cards after trick
+            current_player_number = m_player_to_move;
+        }
+        while ( deck.size() != 0 )
+        {
+            if(current_player_number != player_number) {
+                // TODO get subset of deck that is equal to cards that player_number could possibly have -> suit caps
+                // Shuffle and return random card
+                Card card(deck.back().get_suit(), deck.back().get_rank());
+                deck.pop_back();
+
+                if (m_player_hands.count(current_player_number) == 1) { // if value exists for key
+                    m_player_hands[current_player_number]->push_back(card);
+                }
+                else{
+                    Hand* newHand = new Hand();
+                    newHand->push_back(card);
+                    m_player_hands.insert(std::pair<int, Hand*>(current_player_number, newHand));
+                }
+            }
+            current_player_number = get_next_player(current_player_number);
+        }
     }
+    while( suited_capabilities_met() == false );
 }
