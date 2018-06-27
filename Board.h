@@ -40,6 +40,8 @@ public:
     void randomize(int player_number);
     void print_hand(Hand hand);
 
+    int get_winner();
+
     int discard_pile_size();
 
 
@@ -47,7 +49,7 @@ public:
 
     Trick *m_current_trick;
 private:
-    int m_player_to_move = 1;
+    int m_player_to_move;
     std::vector<Card> m_discard_pile;
     bool suited_capabilities_met();
 

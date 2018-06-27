@@ -13,6 +13,10 @@ void print_1_move(player_move move) {
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
+  int a = 0;
+  int b = 0;
+  int c = 0;
+  int d = 0;
 
     for (unsigned int i(0); i < 1; i++) {
         Board board;
@@ -41,7 +45,24 @@ int main() {
                 std::cout << " " << board.m_player_hands[4]->size() << std::endl;
             }
         }
-        board.print_scores();
+//        board.print_scores();
+
+
+        switch (board.get_winner()) {
+          case 1:
+              a++;
+              break;
+          case 2:
+              b++;
+              break;
+          case 3:
+              c++;
+              break;
+          case 4:
+              d++;
+              break;
+        }
+        std::cout << "Winner: " << board.get_winner() << " " << a << " " << b << " " << c << " " << d << " " << std::endl;
     }
     std::cout << "Finished: " << std::endl;
     return 0;

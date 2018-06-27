@@ -59,6 +59,8 @@ Board::Board() : m_current_trick(NULL)
 
 
     std::cout << "Board constructor." << std::endl;
+
+    m_player_to_move = rand() % 4 + 1; // TODO
 }
 
 Board::Board(const Board &obj)
@@ -177,6 +179,22 @@ void Board::print_scores()
     std::cout << " " << m_player_scores[2];
     std::cout << " " << m_player_scores[3];
     std::cout << " " << m_player_scores[4] << std::endl;
+}
+
+int Board::get_winner()
+{
+    int winner = 0;
+    int lowest_score = INT16_MAX;
+
+    for (unsigned int i(1); i < 5; ++i) {
+        int current_score = m_player_scores[i];
+        if (current_score < lowest_score) {
+            lowest_score = current_score;
+            winner = i;
+        }
+    }
+
+    return  winner;
 }
 
 void Board::do_move(player_move move)
